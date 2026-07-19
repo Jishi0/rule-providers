@@ -80,4 +80,3 @@ rules:
   - RULE-SET,cn_domain,DIRECT
   - RULE-SET,cn_ip,DIRECT,no-resolve
   - MATCH,MATCH
-  
