@@ -1,0 +1,83 @@
+rule-anchor:
+  domain: &domain
+    type: http
+    interval: 86400
+    proxy: PROXY
+    behavior: domain
+    format: mrs
+  ipcidr: &ipcidr
+    type: http
+    interval: 86400
+    proxy: PROXY
+    behavior: ipcidr
+    format: mrs
+  classical: &classical
+    type: http
+    interval: 86400
+    proxy: PROXY
+    behavior: classical
+    format: text
+rule-providers:
+  reject:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/Jishi0/rule-providers/refs/heads/main/reject.text"
+    path: ./rule_providers/reject.text
+  direct:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/Jishi0/rule-providers/refs/heads/main/direct.text"
+    path: ./rule_providers/direct.text
+  proxy:
+    <<: *classical
+    url: "https://raw.githubusercontent.com/Jishi0/rule-providers/refs/heads/main/proxy.text"
+    path: ./rule_providers/proxy.text
+  private_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/private.mrs"
+    path: ./rule_providers/private_domain.mrs
+  private_ip:
+    <<: *ipcidr
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/private.mrs"
+    path: ./rule_providers/private_ip.mrs
+  category-ads-all:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-ads-all.mrs"
+    path: ./rule_providers/category-ads-all.mrs
+  microsoft@cn:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/microsoft@cn.mrs"
+    path: ./rule_providers/microsoft@cn.mrs
+  category-games@cn:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/category-games@cn.mrs"
+    path: ./rule_providers/category-games@cn.mrs
+  telegram_ip:
+    <<: *ipcidr
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geoip/telegram.mrs"
+    path: ./rule_providers/telegram_ip.mrs
+  gfw:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/gfw.mrs"
+    path: ./rule_providers/gfw.mrs
+  cn_domain:
+    <<: *domain
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo-lite/geosite/cn.mrs"
+    path: ./rule_providers/cn_domain.mrs
+  cn_ip:
+    <<: *ipcidr
+    url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo-lite/geoip/cn.mrs"
+    path: ./rule_providers/cn_ip.mrs
+rules:
+  - RULE-SET,reject,REJECT
+  - RULE-SET,direct,DIRECT
+  - RULE-SET,proxy,PROXY
+  - RULE-SET,private_domain,DIRECT
+  - RULE-SET,private_ip,DIRECT,no-resolve
+  - RULE-SET,category-ads-all,REJECT
+  - RULE-SET,microsoft@cn,DIRECT
+  - RULE-SET,category-games@cn,DIRECT
+  - RULE-SET,telegram_ip,PROXY,no-resolve
+  - RULE-SET,gfw,PROXY
+  - RULE-SET,cn_domain,DIRECT
+  - RULE-SET,cn_ip,DIRECT,no-resolve
+  - MATCH,MATCH
+  
